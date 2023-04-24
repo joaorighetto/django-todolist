@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    <title>Home</title>
+{% endblock title %}
+
+{% block content %}
+        {% for todo in todo_list %}
+            {% if forloop.counter == 1 %}
+                <div class="text-center pt-3 pb-2">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="Check" width="60">
+                    <h2 class="my-4">Task List</h2>
+                </div>
+                <table class="table text-white mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">Team Member</th>
+                            <th scope="col" class="text-center">Task</th>
+                            <th scope="col" class="text-center">Priority</th>
+                            <th scope="col" class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            {% endif %}
+                <tr class="fw-normal">
+                    <th class="align-middle text-center">
+                        {% if todo.user %}
+                            <img src="{{ todo.user.avatar }}" alt="" style="width: 40px; height: auto;" class="rounded-circle">
+                                <span class="ms-2">{{ todo.user.username }}</span>
+                        {% else %}
+                            <img src="{% static 'img/misc-icons/anon-icon.png' %}" alt="" style="width: 40px; height: auto;" class="rounded-circle">
+                            <span class="ms-2">Any</span>
+                        {% endif %}
+                    </th>
+                    <td class="align-middle text-center">
+                        <a href="{% url 'todo:detail' pk=todo.id %}" class="btn btn-primary card mask-custom p-0">
+                            <h5 class="m-0"><span class="badge pb-2">{{todo.task|capfirst}}</span></h5>
+                        </a>
+                    </td>
+                    <td class="align-middle text-center">
+                        {% if todo.priority == 'Low' %}
+                            <h5 class="mb-0"><span class="badge text-success">{{todo.priority|capfirst}}</span></h5>
+                        {% elif todo.priority == 'Medium' %}
+                            <h5 class="mb-0"><span class="badge text-warning">{{todo.priority|capfirst}}</span></h5>
+                        {% else %}
+                            <h5 class="mb-0"><span class="badge text-danger">{{todo.priority|capfirst}}</span></h5>
+                        {% endif %}
+                    </td>
+                    <td class="align-middle text-center">
+                        <a href="{% url 'todo:done' pk=todo.id %}" title="Done"><img src="{% static 'img/misc-icons/check-icon.png' %}" alt="" style="width: 20px; height: auto;"></a>
+                        <a href="{% url 'todo:delete' pk=todo.id %}" title="Remove"><img src="{% static 'img/misc-icons/x-icon.png' %}" alt="" style="width: 20px; height: auto;"></a>
+                    </td>
+                </tr>
+        {% empty %}
+            <div class="text-center pt-3 pb-2">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="Check" width="60">
+                <h2 class="card-title">Task List</h2>
+                <p class="card-text">No tasks yet!</p>
+            </div>
+        {% endfor %}
+                    </tbody>
+                </table>
+
+          <a href="{% url 'todo:create' %}" class="btn btn-primary card mask-custom">New Task</a>
+
+{% endblock content %}

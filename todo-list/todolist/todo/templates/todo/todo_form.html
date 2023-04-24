@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Create a Todo</title>
+{% endblock %}
+
+{% block content %}
+    <form method="POST">{% csrf_token %}
+        <div class="text-center">
+            {{ form.as_p }}
+            {% if todo.id %}
+            <a href="{% url 'todo:detail' pk=todo.id %}" class="btn btn-secondary my-2">Back</a>
+            {% else %}
+            <a href="{% url 'todo:list' %}" class="btn btn-secondary my-2">Back</a>
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary my-2">Submit</button>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+  <form method="POST"> {% csrf_token %}
+    <div class="text-center">
+      <p>Are you sure you want to delete "{{todo.task}}"</p>
+      <p>This action can't be undone</p>
+
+      <input type="submit" class="btn btn-danger" value="Confirm">
+    </div>
+  </form>
+{% endblock %}

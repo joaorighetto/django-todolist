@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="align-middle text-center card mask-custom">
+    <h1 class="my-4">{{todo.task}}</h1>
+    {% if todo.priority == 'Low' %}
+        <small class="">priority</small>
+        <h5 class=""><span class="badge text-success mask-custom">{{todo.priority}}</span></h5>
+    {% elif todo.priority == 'Medium' %}
+        <h5 class="mb-3"><span class="badge text-warning mask-custom">{{todo.priority}}</span></h5>
+    {% else %}
+        <h5 class="mb-3"><span class="badge text-danger mask-custom">{{todo.priority}}</span></h5>
+    {% endif %}
+
+</div>
+<div class="align-middle text-center">
+    <a href="{% url 'todo:list' %}" class="btn btn-secondary my-2">Back</a>
+    <a href="{% url 'todo:update' pk=todo.id %}" class="btn btn-primary">Edit</a>
+    <a href="{% url 'todo:delete' pk=todo.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}
